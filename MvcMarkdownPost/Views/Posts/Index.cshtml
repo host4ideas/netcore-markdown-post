@@ -1,0 +1,68 @@
+﻿@model IEnumerable<MvcMarkdownPost.Models.Post>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Posts</h1>
+
+<form method="post" asp-action="NewPost" asp-controller="Posts">
+    <label class="form-label">Introduzca un texto en Markdown</label>
+    <textarea type="text" name="text" class="form-control" cols="5" rows="5"></textarea>
+
+    <button class="mt-1 btn btn-outline-success">
+        Nuevo post
+    </button>
+</form>
+
+@{
+    if (ViewData["ERROR"] != null)
+    {
+        <div class="mt-4 alert alert-danger" role="alert">
+            @ViewData["ERROR"]
+        </div>
+    }
+
+    if (ViewData["SUCCESS"] != null)
+    {
+        <div class="mt-4 alert alert-success" role="alert">
+            @ViewData["SUCCESS"]
+        </div>
+    }
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePosted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @item.PostText.TruncateLongString(50)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePosted)
+                </td>
+                <td>
+                    @Html.ActionLink("Detalles", "Details", new {  postId = item.Id  })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

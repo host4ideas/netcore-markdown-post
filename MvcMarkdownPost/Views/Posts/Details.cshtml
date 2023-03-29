@@ -1,0 +1,33 @@
+﻿@model MvcMarkdownPost.Models.Post
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles del post</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PostText)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Raw(Model.PostText)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DatePosted)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DatePosted)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Volver</a>
+</div>
