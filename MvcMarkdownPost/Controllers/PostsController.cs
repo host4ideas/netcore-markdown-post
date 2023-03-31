@@ -36,6 +36,11 @@ namespace MvcMarkdownPost.Controllers
         [HttpPost]
         public async Task<IActionResult> NewPost(string text)
         {
+            if (text == null || !text.Any())
+            {
+                return RedirectToAction("Index");
+            }
+
             try
             {
                 await this.repositoryPosts.CreatePostAsync(text);
@@ -45,6 +50,12 @@ namespace MvcMarkdownPost.Controllers
             {
                 TempData["ERROR"] = "Error al subir el post: " + ex.Message;
             }
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DeletePost(int postId)
+        {
+            await this.repositoryPosts.DeletePostAsync(postId);
             return RedirectToAction("Index");
         }
     }

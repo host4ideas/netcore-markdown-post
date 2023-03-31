@@ -7,8 +7,11 @@
 <h1>Posts</h1>
 
 <form method="post" asp-action="NewPost" asp-controller="Posts">
-    <label class="form-label">Introduzca un texto en Markdown</label>
-    <textarea type="text" name="text" class="form-control" cols="5" rows="5"></textarea>
+    <label class="form-label" for="postText">Introduzca un texto en Markdown</label>
+    <div class="d-flex gap-2">
+        <textarea type="text" id="postText" name="text" class="form-control w-50" cols="5" rows="5" required></textarea>
+        <div id="markdownPreview" class="w-50 border rounded">Markdown preview</div>
+    </div>
 
     <button class="mt-1 btn btn-outline-success">
         Nuevo post
@@ -60,9 +63,26 @@
                     @Html.DisplayFor(modelItem => item.DatePosted)
                 </td>
                 <td>
-                    @Html.ActionLink("Detalles", "Details", new {  postId = item.Id  })
+                    @Html.ActionLink("Detalles", "Details", new {  postId = item.Id  }) |
+                    @Html.ActionLink("Borrar", "DeletePost", new {  postId = item.Id  })
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section scripts {
+    <script>
+        const converter = new showdown.Converter({ extensions: ['xssfilter'] });
+
+        function parseMarkdown() {
+            const text = $("#postText").val();
+            const html = converter.makeHtml(text);
+            $("#markdownPreview").html(html);
+        }
+
+        $("#postText").keyup(function (e) {
+            parseMarkdown();
+        });
+    </script>
+}

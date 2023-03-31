@@ -43,5 +43,15 @@ namespace MvcMarkdownPost.Repositories
             });
             await this.context.SaveChangesAsync();
         }
+
+        public async Task DeletePostAsync(int postId)
+        {
+            Post? post = await this.FindPostByIdAsync(postId);
+            if (post != null)
+            {
+                this.context.Posts.Remove(post);
+                await this.context.SaveChangesAsync();
+            }
+        }
     }
 }
