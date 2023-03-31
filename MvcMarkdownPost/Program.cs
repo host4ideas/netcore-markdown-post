@@ -4,11 +4,12 @@ using MvcMarkdownPost.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Obtenemos la connectionString de appsettings.json
 string connectionString = builder.Configuration.GetConnectionString("SqlPost");
 
-// Add services to the container.
-
+// Activamos el contexto para la inyeccion
 builder.Services.AddDbContext<PostsContext>(options => options.UseSqlServer(connectionString));
+// Activamos el repositorio que hemos creado para la inyeccion
 builder.Services.AddTransient<RepositoryPosts>();
 
 builder.Services.AddControllersWithViews();
@@ -30,6 +31,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// Modificamos la ruta por defecto para que sea la ruta a los posts
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Posts}/{action=Index}/{id?}");

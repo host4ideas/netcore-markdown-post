@@ -73,7 +73,7 @@
 
 @section scripts {
     <script>
-        const converter = new showdown.Converter({ extensions: ['xssfilter'] });
+        const converter = new showdown.Converter({ tables: true });
 
         function parseMarkdown() {
             const text = $("#postText").val();

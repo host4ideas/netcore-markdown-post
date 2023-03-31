@@ -15,7 +15,7 @@ namespace MvcMarkdownPost.Repositories
 
         public Task<List<Post>> GetPostsAsync()
         {
-            return this.context.Posts.ToListAsync();
+            return this.context.Posts.OrderByDescending(x => x.DatePosted).ToListAsync();
         }
 
         public async Task<Post?> FindPostByIdAsync(int postId)
